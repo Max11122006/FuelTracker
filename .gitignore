@@ -1,0 +1,27 @@
+# ── Secrets ───────────────────────────────────────────────────────────────────
+FuelTracker/Configuration/Secrets.xcconfig
+
+# ── Xcode ─────────────────────────────────────────────────────────────────────
+*.xcuserstate
+xcuserdata/
+DerivedData/
+*.moved-aside
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+build/
+
+# ── Swift Package Manager ──────────────────────────────────────────────────────
+.build/
+.swiftpm/
+
+# ── CocoaPods (not used, but just in case) ────────────────────────────────────
+Pods/
+Podfile.lock
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+*.DS_Store
+.AppleDouble
+.LSOverride

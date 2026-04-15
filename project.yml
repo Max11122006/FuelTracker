@@ -1,0 +1,70 @@
+name: FuelTracker
+options:
+  bundleIdPrefix: com.maxd
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "15.4"
+  groupSortPosition: top
+  createIntermediateGroups: true
+  defaultConfig: Debug
+  generateEmptyDirectories: false
+
+settings:
+  base:
+    SWIFT_VERSION: 5.9
+    IPHONEOS_DEPLOYMENT_TARGET: 16.0
+    MARKETING_VERSION: 1.0.0
+    CURRENT_PROJECT_VERSION: 1
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_PREVIEWS: YES
+
+configs:
+  Debug: debug
+  Release: release
+
+targets:
+
+  # ── Main App ──────────────────────────────────────────────────────────────────
+  FuelTracker:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+
+    configFiles:
+      Debug: FuelTracker/Configuration/FuelTracker.xcconfig
+      Release: FuelTracker/Configuration/FuelTracker.xcconfig
+
+    sources:
+      - path: FuelTracker
+        excludes:
+          - "**/*.xcconfig"
+      - path: Shared
+
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.maxd.FuelTracker
+        INFOPLIST_FILE: FuelTracker/Info.plist
+        CODE_SIGN_ENTITLEMENTS: FuelTracker/FuelTracker.entitlements
+        GOOGLE_PLACES_API_KEY: $(GOOGLE_PLACES_API_KEY)
+
+    dependencies:
+      - target: FuelTrackerWidget
+        embed: true
+
+  # ── Widget Extension ───────────────────────────────────────────────────────────
+  FuelTrackerWidget:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "16.0"
+
+    sources:
+      - path: FuelTrackerWidget
+      - path: Shared
+
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.maxd.FuelTracker.widget
+        INFOPLIST_FILE: FuelTrackerWidget/Info.plist
+        CODE_SIGN_ENTITLEMENTS: FuelTrackerWidget/FuelTrackerWidget.entitlements
+        APPLICATION_EXTENSION_API_ONLY: YES

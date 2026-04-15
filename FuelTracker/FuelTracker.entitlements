@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- App Group: shared container for CoreData store and UserDefaults (widget data). -->
+	<!-- Register this group in the Apple Developer portal under your Team ID before building on device. -->
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.maxd.FuelTracker</string>
+	</array>
+</dict>
+</plist>

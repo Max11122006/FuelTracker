@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel"
+       documentVersion="1.0"
+       lastSavedToolsVersion="21754"
+       systemVersion="22A380"
+       minimumToolsVersion="Automatic"
+       sourceLanguage="Swift"
+       userDefinedModelVersionIdentifier="">
+
+  <!-- FuelStationCD — stable identity record for a fuel station -->
+  <entity name="FuelStationCD" representedClassName="FuelStationCD" syncable="YES">
+    <attribute name="placeID"   optional="NO"  attributeType="String"/>
+    <attribute name="name"      optional="NO"  attributeType="String"/>
+    <attribute name="brand"     optional="YES" attributeType="String"/>
+    <attribute name="latitude"  optional="NO"  attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+    <attribute name="longitude" optional="NO"  attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+    <attribute name="address"   optional="YES" attributeType="String"/>
+    <relationship name="priceRecords"
+                  optional="YES"
+                  toMany="YES"
+                  deletionRule="Cascade"
+                  destinationEntity="FuelPriceRecordCD"
+                  inverseName="station"
+                  inverseEntity="FuelPriceRecordCD"/>
+  </entity>
+
+  <!-- FuelPriceRecordCD — a single price observation for a station -->
+  <entity name="FuelPriceRecordCD" representedClassName="FuelPriceRecordCD" syncable="YES">
+    <attribute name="id"             optional="NO"  attributeType="UUID" usesScalarValueType="NO"/>
+    <attribute name="pricePerLitre"  optional="NO"  attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+    <attribute name="fuelType"       optional="NO"  attributeType="String" defaultValueString="unleaded"/>
+    <attribute name="recordedAt"     optional="NO"  attributeType="Date" usesScalarValueType="NO"/>
+    <attribute name="source"         optional="NO"  attributeType="String" defaultValueString="manual"/>
+    <relationship name="station"
+                  optional="YES"
+                  maxCount="1"
+                  deletionRule="Nullify"
+                  destinationEntity="FuelStationCD"
+                  inverseName="priceRecords"
+                  inverseEntity="FuelStationCD"/>
+  </entity>
+
+  <!-- UserSettingsCD — singleton row storing the user's preferences -->
+  <entity name="UserSettingsCD" representedClassName="UserSettingsCD" syncable="YES">
+    <attribute name="carMPG"            optional="NO" attributeType="Double" defaultValueString="35"  usesScalarValueType="YES"/>
+    <attribute name="fillUpLitres"      optional="NO" attributeType="Double" defaultValueString="40"  usesScalarValueType="YES"/>
+    <attribute name="essoDiscountPence" optional="NO" attributeType="Double" defaultValueString="10"  usesScalarValueType="YES"/>
+    <attribute name="homePostcode"      optional="YES" attributeType="String"/>
+    <attribute name="uniLocation"       optional="YES" attributeType="String"/>
+  </entity>
+
+  <elements>
+    <element name="FuelStationCD"     positionX="-63"  positionY="-18"  width="128" height="119"/>
+    <element name="FuelPriceRecordCD" positionX="160"  positionY="-18"  width="128" height="134"/>
+    <element name="UserSettingsCD"    positionX="-63"  positionY="180"  width="128" height="104"/>
+  </elements>
+</model>
