@@ -1,8 +1,43 @@
+<div align="center">
+
+<img src="Shared/Assets.xcassets/AppIcon.appiconset/AppIcon.png" width="120" alt="FuelTracker icon" />
+
 # FuelTracker
 
-An iOS app that finds nearby fuel stations, applies your Esso fuel card discount, and tells you whether it's worth driving further to a cheaper station — accounting for the extra fuel you'd burn getting there.
+**Stop overpaying for petrol. Know before you go.**
 
-Includes a home-screen **WidgetKit widget** that monitors your commute route (EH17 8LW → Heriot-Watt Edinburgh) and shows a green/red verdict for your morning run.
+[![iOS 16+](https://img.shields.io/badge/iOS-16%2B-black?logo=apple&logoColor=white)](https://developer.apple.com/ios/)
+[![Swift 5.9](https://img.shields.io/badge/Swift-5.9-F05138?logo=swift&logoColor=white)](https://swift.org)
+[![XcodeGen](https://img.shields.io/badge/XcodeGen-required-blue)](https://github.com/yonaskolb/XcodeGen)
+[![UK Gov Fuel Finder API](https://img.shields.io/badge/Data-UK%20Gov%20Fuel%20Finder%20API-005EA5)](https://www.gov.uk/guidance/access-the-latest-fuel-prices-and-forecourt-data-via-api-or-email)
+
+</div>
+
+---
+
+FuelTracker pulls **live UK petrol prices** from the government-mandated Fuel Finder API, applies your **Esso fuel card discount**, then does the maths — is it actually cheaper to drive past your local Esso to that slightly cheaper Shell down the road, once you factor in the extra fuel you'll burn getting there?
+
+The answer, with a £ figure, every time you open the app.
+
+---
+
+## Features
+
+- **Live prices** for every petrol station in your area via the [UK Government Fuel Finder API](https://www.gov.uk/guidance/access-the-latest-fuel-prices-and-forecourt-data-via-api-or-email) — updated throughout the day, no scraping
+- **Esso card discount** applied automatically (configurable pence/litre)
+- **Worth-it calculator** — accounts for detour distance, extra fuel burned, and your fill-up volume
+- **Best Pick tab** — one clear answer: which station, how much you save, the full breakdown
+- **Interactive fuel gauge** — set your current tank level (2006 Honda Civic, 50 L) and the app calculates exactly how much a fill-up costs you at each station
+- **Map view** with colour-coded pins: 🟢 green within 1p of cheapest · 🟡 amber 1–3p more · 🔴 red over 3p more
+- **Expandable station rows** — tap any station for the complete cost breakdown (fill-up cost, detour miles, detour fuel cost, gross and net saving)
+- **Manual price override** — swipe left on any station to enter a price yourself; timestamped and shown with a staleness indicator
+- **10-mile search radius** — covers all of Edinburgh and the western suburbs without needing to scroll
+
+---
+
+## Screenshots
+
+> _Run the app on a simulator or device to see it in action. Features → Location → Custom Location: `55.9065, -3.1800` puts you in south Edinburgh._
 
 ---
 
@@ -11,151 +46,137 @@ Includes a home-screen **WidgetKit widget** that monitors your commute route (EH
 ### Prerequisites
 
 | Tool | Install |
-|---|---|
-| Xcode 15+ | Mac App Store |
+| --- | --- |
+| Xcode 15.4+ | Mac App Store |
 | XcodeGen | `brew install xcodegen` |
-| Apple Developer account | Required for device builds (simulator works without it) |
+| UK Gov Fuel Finder API credentials | [developer.fuel-finder.service.gov.uk](https://developer.fuel-finder.service.gov.uk) |
 
 ### 1. Generate the Xcode project
 
 ```bash
-cd /path/to/FuelTracker
+git clone https://github.com/your-username/FuelTracker.git
+cd FuelTracker
 xcodegen generate
 open FuelTracker.xcodeproj
 ```
 
-### 2. Add your Google Places API key
+### 2. Add your Fuel Finder API credentials
 
-The app uses **Google Places Nearby Search** to find petrol stations near you. Without a key, the app falls back to manually-entered prices only.
+The app uses the **UK Government Fuel Finder API** for live station and price data.
 
-1. Get a key at [console.cloud.google.com](https://console.cloud.google.com/)
-2. Enable **Places API (New)** under APIs & Services → Library
-3. Copy the template file and add your key:
+1. Register at [developer.fuel-finder.service.gov.uk](https://developer.fuel-finder.service.gov.uk)
+2. Create an application to get a **Client ID** and **Client Secret**
+3. Launch the app → **Settings → Fuel Finder API** → enter your credentials → tap **Save & Refresh**
 
-```bash
-cp FuelTracker/Configuration/Secrets.xcconfig.template \
-   FuelTracker/Configuration/Secrets.xcconfig
+Credentials are stored in the **iOS Keychain** — never in source code, config files, or iCloud.
+
+### 3. Build & run
+
+Select the **FuelTracker** scheme, pick a simulator or device, and hit `Cmd+R`.
+
+---
+
+## How the maths works
+
+For each non-Esso station, the app computes:
+
+```text
+essoEffectivePrice  =  essoPumpPrice − cardDiscount        (default 10p/L)
+
+extraDistance       =  max(0, distToAlt − distToEsso)     miles
+extraFuelLitres     =  extraDistance × 2 × (4.546 ÷ mpg)  round-trip detour
+extraFuelCost       =  extraFuelLitres × essoEffectivePrice
+
+grossSaving         =  (essoEffectivePrice − altPrice) × fillLitres
+netSaving           =  grossSaving − extraFuelCost
+
+  netSaving > 0  →  ✅ WORTH IT
+  netSaving ≤ 0  →  ❌ STAY AT ESSO
 ```
 
-4. Edit `FuelTracker/Configuration/Secrets.xcconfig` and replace the placeholder:
-
-```
-GOOGLE_PLACES_API_KEY = AIzaSy...your-real-key-here...
-```
-
-`Secrets.xcconfig` is git-ignored and never committed.
-
-### 3. Register the App Group (device builds only)
-
-The app and widget share data via an **App Group** (`group.com.maxd.FuelTracker`).
-
-1. Sign in to [developer.apple.com](https://developer.apple.com)
-2. Go to **Certificates, IDs & Profiles → Identifiers**
-3. Create (or edit) the App ID `com.maxd.FuelTracker` and enable **App Groups**
-4. Add group `group.com.maxd.FuelTracker`
-5. Repeat for the widget extension ID `com.maxd.FuelTracker.widget`
-
-In Xcode, set your **Team** under each target's Signing & Capabilities.
-
-### 4. Build & Run
-
-- Select the **FuelTracker** scheme and a simulator or device
-- `Cmd+R` to build and run
+The **effective price per litre** (`altPrice + extraFuelCost ÷ fillLitres`) is used for sorting the list and colour-coding map pins — so the station ranked #1 is the cheapest door-to-door, not just the cheapest at the pump.
 
 ---
 
 ## Architecture
 
-```
+```text
 FuelTracker/
-├── Shared/                  # Compiled into both app + widget
-│   └── AppGroupStore.swift  # UserDefaults bridge for widget data
+├── Shared/                        # Compiled into app (and future widget)
+│   ├── AppGroupStore.swift        # UserDefaults bridge (App Group)
+│   └── Assets.xcassets/           # Shared colours + app icon
 │
-├── FuelTracker/             # Main app target
-│   ├── Configuration/       # xcconfig, API key injection
-│   ├── CoreData/            # Persistent store + NSManagedObject subclasses
-│   ├── Models/              # Plain Swift value types (FuelStation, WorthItResult, UserSettings)
-│   ├── Services/
-│   │   ├── WorthItCalculator.swift   # Pure calculation logic
-│   │   ├── LocationService.swift     # CLLocationManager wrapper
-│   │   ├── GooglePlacesService.swift # Station discovery
-│   │   ├── EssoFeedService.swift     # CMA live price feed (no key needed)
-│   │   └── FuelPriceService.swift    # Orchestration layer
-│   ├── ViewModels/          # @MainActor ObservableObjects
-│   └── Views/               # SwiftUI views (Map, List, Settings, Components)
-│
-└── FuelTrackerWidget/       # Widget extension target
-    ├── WidgetModels.swift        # CommuteEntry: TimelineEntry
-    ├── CommuteWidget.swift       # TimelineProvider + Widget configuration
-    └── CommuteWidgetEntryView.swift  # Small + medium widget views
+└── FuelTracker/                   # Main app target
+    ├── Configuration/
+    │   ├── Config.swift           # URL constants, radii, thresholds
+    │   └── FuelTracker.xcconfig   # Build settings
+    ├── CoreData/                  # Persistent store (App Group container)
+    │   ├── FuelTracker.xcdatamodeld
+    │   ├── FuelStationCD.swift
+    │   ├── FuelPriceRecordCD.swift
+    │   ├── UserSettingsCD.swift
+    │   └── PersistenceController.swift
+    ├── Models/
+    │   ├── FuelStation.swift      # Plain value type (not NSManagedObject)
+    │   ├── UserSettings.swift     # Settings snapshot passed to services
+    │   └── WorthItResult.swift    # Calculation output (Identifiable, Equatable)
+    ├── Services/
+    │   ├── FuelFinderAPIService.swift   # OAuth2, batch pagination, geo cache
+    │   ├── FuelPriceService.swift       # Orchestration → CoreData → calculator
+    │   ├── WorthItCalculator.swift      # Pure stateless calculation engine
+    │   ├── LocationService.swift        # CLLocationManager wrapper
+    │   └── KeychainService.swift        # Credential storage
+    ├── ViewModels/
+    │   ├── StationsViewModel.swift      # @MainActor, drives Map + List
+    │   └── SettingsViewModel.swift      # @MainActor, persists settings
+    └── Views/
+        ├── ContentView.swift            # TabView root
+        ├── Map/                         # MapKit pin + annotation views
+        ├── List/                        # Station list + expandable rows
+        ├── BestPick/                    # Opinionated recommendation page
+        ├── Settings/                    # Credentials, gauge, preferences
+        └── Components/                  # VerdictBadge, FuelGaugeView, StalenessLabel
 ```
 
-**Pattern:** MVVM. ViewModels own `@Published` state and drive views. Services are injected via `static shared` singletons. Plain Swift structs flow between layers — `NSManagedObject` subclasses never leave the persistence layer.
+**MVVM throughout.** ViewModels hold `@Published` state and call into services. Plain Swift structs (`FuelStation`, `WorthItResult`) flow between layers — `NSManagedObject` subclasses never leave the persistence layer. `WorthItCalculator` is a pure `enum` with `static` functions — fully unit-testable with zero mocking.
 
 ---
 
-## Data Sources
+## Data
 
-| Source | What it provides | Key required? |
-|---|---|---|
-| [CMA Esso feed](https://fuelprices.esso.co.uk/fuel_prices_data.json) | Live Esso pump prices (pence/litre) | No — free, mandatory |
-| Google Places Nearby Search | Station names + coordinates | Yes — see setup above |
-| CoreData (local) | Manually-entered prices + history | — |
+| Source | What it provides | Auth |
+| --- | --- | --- |
+| [UK Gov Fuel Finder API](https://www.fuel-finder.service.gov.uk) | Live prices + station metadata for every UK forecourt (~23,500 stations) | OAuth2 client credentials |
+| CoreData (local) | Manually-entered prices + full price history | — |
 
-**Esso prices** come from the CMA-mandated live feed published directly by Esso UK — no key needed, updates throughout the day.
+The Fuel Finder API is mandated by the **Competition and Markets Authority (CMA)** — all major fuel retailers are required to publish live prices to it. Data updates throughout the day.
 
-**Other stations** are located via Google Places. Prices must be entered manually (swipe left on any row → Update Price). Once entered, prices are stored locally with a timestamp and the staleness indicator shows how old they are.
+Station and price data are fetched in parallel batches (6 concurrent requests) and cached locally:
 
----
-
-## Worth-It Calculation
-
-For each non-Esso station, the app calculates:
-
-```
-essoEffectivePrice   = essoPumpPrice − cardDiscount (default 10p)
-extraDistance        = max(0, distanceToAlt − distanceToEsso)  [miles]
-extraFuelLitres      = extraDistance × 2 × (4.546 / mpg)       [round-trip detour]
-extraFuelCost        = extraFuelLitres × essoEffectivePrice     [pence]
-grossSaving          = (essoEffectivePrice − altPrice) × fillLitres
-netSaving            = grossSaving − extraFuelCost
-
-WORTH IT  ←→  netSaving > 0
-```
-
-The **effective price per litre** (`altPrice + extraFuelCost / fillLitres`) is used for sorting the list and colour-coding map pins.
+- **Station metadata** — 24-hour TTL, invalidated if you move more than 5 miles
+- **Prices** — 15-minute TTL, with incremental delta updates after the first fetch
 
 ---
 
-## Widget
+## Configuration
 
-The **Commute Fuel Check** widget:
-- Reads pre-computed results written to App Group `UserDefaults` by the main app
-- Makes **no network calls** (WidgetKit constraint)
-- Refreshes at 07:00, 12:00, 17:00; also reloads whenever the main app refreshes prices
-- Shows a **green** verdict if any station along your commute undercuts the discounted Esso price after accounting for detour cost; **red** otherwise
-
-To test the widget update cycle in the simulator:
-1. Run the main app and let it fetch prices
-2. Add the widget to the home screen
-3. The widget reads from the shared `UserDefaults` immediately
-
----
-
-## Settings
+All user settings are editable in **Settings → Save & Refresh**:
 
 | Setting | Default | Notes |
-|---|---|---|
-| Car MPG | 35 | Used in detour cost calculation |
-| Fill-up litres | 40 L | Used for gross saving calculation |
-| Esso discount | 10p/litre | Applied to all Esso prices automatically |
-| Home postcode | EH17 8LW | Widget route start |
-| Destination | Heriot-Watt University | Widget route end |
+| --- | --- | --- |
+| Car MPG | 35 | Used to calculate detour fuel cost |
+| Fuel gauge level | ½ tank | Draggable gauge — fill-up litres derived automatically (50 L tank) |
+| Esso discount | 10p/L | Applied to all Esso prices |
+| Home postcode | _(empty)_ | Set your own — used for the commute widget |
+| Destination | _(empty)_ | Set your own |
+| Fuel Finder Client ID | _(Keychain)_ | Enter once, stored securely |
+| Fuel Finder Client Secret | _(Keychain)_ | Enter once, stored securely |
 
 ---
 
 ## Notes
 
-- **Simulator**: Location permission works in simulator. Use **Features → Location → Custom Location** to set a fake position in Edinburgh (e.g. 55.906, −3.128).
-- **App Groups on simulator**: App Groups work in the simulator without Developer portal registration. You only need portal setup for real device builds.
-- **Background refresh**: Registers a `BGAppRefreshTask` that fires ~every 4 hours when the app has been used recently. iOS throttles background tasks aggressively — this is expected behaviour.
+- **Simulator location** — use **Features → Location → Custom Location** and enter `55.9065, -3.1800` (south Edinburgh) to get meaningful results
+- **Costco excluded** — Costco fuel stations require a paid membership so they're filtered out of results
+- **Search radius** — 10 miles by default, with a 20-mile background download cache so nearby stations are always ready even after a short drive
+- **App Groups** — work on the simulator without Apple Developer portal registration; only needed for real device builds
