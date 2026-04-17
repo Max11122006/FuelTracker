@@ -2,7 +2,3 @@
 // Committed — includes the secrets file if it exists locally.
 // The #include? syntax (Xcode 12+) silently skips the file if missing.
 #include? "Secrets.xcconfig"
-
-// Default to empty string if GOOGLE_PLACES_API_KEY is not defined in Secrets.xcconfig.
-// The app handles an empty key gracefully (falls back to manual price entry).
-GOOGLE_PLACES_API_KEY =

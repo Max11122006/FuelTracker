@@ -3,81 +3,64 @@ import CoreLocation
 import CoreData
 import WidgetKit
 
-/// Orchestrates all data sources: Google Places → Esso feed → CoreData → WorthItCalculator.
-/// Returns a sorted `[WorthItResult]` ready for display and writes the headline result
-/// to `AppGroupStore` so the widget can show it without making network calls.
+/// Orchestrates FuelFinderAPIService → CoreData → WorthItCalculator.
+/// Public interface unchanged — callers (StationsViewModel, BGTask) are unaffected.
 final class FuelPriceService {
     static let shared = FuelPriceService()
     private init() {}
 
-    private let places      = GooglePlacesService.shared
-    private let essoFeed    = EssoFeedService.shared
+    private let api         = FuelFinderAPIService.shared
     private let persistence = PersistenceController.shared
 
     // MARK: - Main refresh
 
-    /// - Returns: `(results, nearestEsso)` — `results` is non-Esso stations sorted by
-    ///            effective price; `nearestEsso` is the Esso reference station (may be nil
-    ///            if no Esso found or price unavailable).
+    /// Returns `(results, nearestEsso)`.
+    /// `results` contains non-Esso stations sorted by effective price.
+    /// `nearestEsso` is the nearest Esso with the card discount as the reference.
     func refreshPrices(
         for coordinate: CLLocationCoordinate2D,
         settings: UserSettings
     ) async throws -> (results: [WorthItResult], essoStation: FuelStation?) {
 
-        // 1. Fetch station locations from Google Places
-        var stations = try await places.fetchNearbyStations(coordinate: coordinate)
-
-        // 2. If Places API isn't configured, fall back to whatever is in CoreData
-        if stations.isEmpty {
+        // 1. Fetch nearby stations with prices from the Fuel Finder API.
+        //    Falls back to CoreData cache if credentials not configured yet.
+        var stations: [FuelStation]
+        do {
+            stations = try await api.fetchNearbyStations(
+                coordinate:   coordinate,
+                radiusMiles:  Config.defaultSearchRadiusMiles
+            )
+        } catch FuelFinderAPIService.FuelFinderError.credentialsNotConfigured {
             stations = loadCachedStations()
         }
 
-        // 3. Enrich stations with prices
-        var enriched: [FuelStation] = []
+        // 2. Overlay any manual price entries from CoreData.
+        //    Manual entries win if they're newer than the API data.
         let storedPrices = loadLatestStoredPrices()
-
-        for var station in stations {
-            // Esso stations: try the live feed first
-            if station.isEsso {
-                if let livePricePence = await essoFeed.price(near: station.coordinate) {
-                    station.pricePerLitre = livePricePence
-                    station.priceSource   = .essoFeed
-                    station.lastUpdated   = Date()
-                }
-            }
-            // Manual / previously-stored price overrides if it's more recent or if we
-            // still have no price from the live source.
-            if let record = storedPrices[station.id] {
-                let recordDate = record.recordedAt ?? .distantPast
-                let liveDate   = station.lastUpdated ?? .distantPast
-                if record.source == "manual" || recordDate > liveDate || station.pricePerLitre == nil {
-                    station.pricePerLitre = record.pricePerLitre
-                    station.priceSource   = FuelStation.PriceSource(rawValue: record.source ?? "") ?? .unknown
-                    station.lastUpdated   = record.recordedAt
-                }
-            }
-            enriched.append(station)
+        stations = stations.map { station in
+            var s = station
+            applyManualOverride(&s, stored: storedPrices)
+            return s
         }
 
-        // 4. Find the nearest Esso with a known price
-        let essoStations = enriched.filter { $0.isEsso && $0.pricePerLitre != nil }
-        let nearestEsso: FuelStation? = essoStations.min {
+        // 3. Persist enriched stations (API prices only; manual entries persisted at entry time).
+        persistStations(stations)
+
+        // 4. Find the nearest Esso station that has a price.
+        let essoStations = stations.filter { $0.isEsso && $0.pricePerLitre != nil }
+        guard let nearestEsso = essoStations.min(by: {
             WorthItCalculator.haversineDistanceMiles(from: coordinate, to: $0.coordinate) <
             WorthItCalculator.haversineDistanceMiles(from: coordinate, to: $1.coordinate)
-        }
-
-        guard let esso = nearestEsso, let essoPricePence = esso.pricePerLitre else {
-            // No Esso reference price — persist what we have and return empty results
-            persistStations(enriched)
+        }), let essoPricePence = nearestEsso.pricePerLitre else {
             return ([], nil)
         }
 
         let distToEsso = WorthItCalculator.haversineDistanceMiles(
-            from: coordinate, to: esso.coordinate
+            from: coordinate, to: nearestEsso.coordinate
         )
 
-        // 5. Calculate worth-it for every non-Esso station that has a price
-        let nonEsso = enriched.filter { !$0.isEsso && $0.pricePerLitre != nil }
+        // 5. Calculate worth-it for every non-Esso station that has a price.
+        let nonEsso = stations.filter { !$0.isEsso && $0.pricePerLitre != nil }
         let results: [WorthItResult] = nonEsso.compactMap { station in
             guard let price = station.pricePerLitre else { return nil }
             let distToAlt = WorthItCalculator.haversineDistanceMiles(
@@ -95,13 +78,12 @@ final class FuelPriceService {
             )
         }
 
-        // 6. Sort by effective price (cheapest first)
         let sorted = results.sorted { $0.effectivePricePerLitre < $1.effectivePricePerLitre }
 
-        // 7. Write headline data to App Group for widget
+        // 6. Write headline data to App Group UserDefaults for the widget.
         AppGroupStore.nearestEssoStickerPrice  = essoPricePence
         AppGroupStore.nearestEssoDiscountPence = settings.essoDiscountPence
-        AppGroupStore.nearestEssoName          = esso.name
+        AppGroupStore.nearestEssoName          = nearestEsso.name
         AppGroupStore.nearestEssoDistanceMiles = distToEsso
         AppGroupStore.userMPG                  = settings.carMPG
         AppGroupStore.userFillLitres           = settings.fillUpLitres
@@ -114,13 +96,9 @@ final class FuelPriceService {
             AppGroupStore.bestAltNetSavingPence = best.netSavingsPence
         }
 
-        // 8. Persist enriched stations to CoreData
-        persistStations(enriched)
-
-        // 9. Reload widgets
         WidgetCenter.shared.reloadAllTimelines()
 
-        return (sorted, esso)
+        return (sorted, nearestEsso)
     }
 
     // MARK: - Manual price entry
@@ -128,35 +106,42 @@ final class FuelPriceService {
     func saveManualPrice(for station: FuelStation, price: Double, fuelType: String = "unleaded") {
         let ctx = persistence.newBackgroundContext()
         ctx.perform {
-            let stationCD = self.findOrCreateStation(station, in: ctx)
-
-            let record         = FuelPriceRecordCD(context: ctx)
-            record.id          = UUID()
+            let stationCD        = self.findOrCreateStation(station, in: ctx)
+            let record           = FuelPriceRecordCD(context: ctx)
+            record.id            = UUID()
             record.pricePerLitre = price
-            record.fuelType    = fuelType
-            record.recordedAt  = Date()
-            record.source      = FuelStation.PriceSource.manual.rawValue
-            record.station     = stationCD
-
+            record.fuelType      = fuelType
+            record.recordedAt    = Date()
+            record.source        = FuelStation.PriceSource.manual.rawValue
+            record.station       = stationCD
             try? ctx.save()
+        }
+    }
+
+    // MARK: - Manual override helper
+
+    private func applyManualOverride(_ station: inout FuelStation,
+                                     stored: [String: FuelPriceRecordCD]) {
+        guard let record = stored[station.id] else { return }
+        let recordDate = record.recordedAt ?? .distantPast
+        let apiDate    = station.lastUpdated ?? .distantPast
+        if record.source == FuelStation.PriceSource.manual.rawValue || recordDate > apiDate {
+            station.pricePerLitre = record.pricePerLitre
+            station.priceSource   = FuelStation.PriceSource(rawValue: record.source ?? "") ?? .unknown
+            station.lastUpdated   = record.recordedAt
         }
     }
 
     // MARK: - CoreData helpers
 
     private func loadCachedStations() -> [FuelStation] {
-        let ctx = persistence.viewContext
-        let req = FuelStationCD.fetchRequest()
-        let cds = (try? ctx.fetch(req)) ?? []
-        return cds.compactMap { FuelStation(from: $0) }
+        ((try? persistence.viewContext.fetch(FuelStationCD.fetchRequest())) ?? [])
+            .compactMap { FuelStation(from: $0) }
     }
 
     private func loadLatestStoredPrices() -> [String: FuelPriceRecordCD] {
-        let ctx      = persistence.viewContext
-        let stationReq = FuelStationCD.fetchRequest()
-        let stations = (try? ctx.fetch(stationReq)) ?? []
-
         var map: [String: FuelPriceRecordCD] = [:]
+        let stations = (try? persistence.viewContext.fetch(FuelStationCD.fetchRequest())) ?? []
         for station in stations {
             guard let pid = station.placeID, let record = station.latestPrice() else { continue }
             map[pid] = record
@@ -167,31 +152,27 @@ final class FuelPriceService {
     private func persistStations(_ stations: [FuelStation]) {
         let ctx = persistence.newBackgroundContext()
         ctx.perform {
-            for station in stations {
-                guard station.pricePerLitre != nil else { continue }
-                let stationCD = self.findOrCreateStation(station, in: ctx)
-
-                // Only persist if we have a new price (manual entries are already persisted)
-                if station.priceSource != .manual, let price = station.pricePerLitre {
-                    let record           = FuelPriceRecordCD(context: ctx)
-                    record.id            = UUID()
-                    record.pricePerLitre = price
-                    record.fuelType      = station.fuelType
-                    record.recordedAt    = station.lastUpdated ?? Date()
-                    record.source        = station.priceSource.rawValue
-                    record.station       = stationCD
-                }
+            for station in stations where station.priceSource != .manual {
+                guard let price = station.pricePerLitre else { continue }
+                let cd               = self.findOrCreateStation(station, in: ctx)
+                let record           = FuelPriceRecordCD(context: ctx)
+                record.id            = UUID()
+                record.pricePerLitre = price
+                record.fuelType      = station.fuelType
+                record.recordedAt    = station.lastUpdated ?? Date()
+                record.source        = station.priceSource.rawValue
+                record.station       = cd
             }
             try? ctx.save()
         }
     }
 
     @discardableResult
-    private func findOrCreateStation(_ station: FuelStation, in ctx: NSManagedObjectContext) -> FuelStationCD {
+    private func findOrCreateStation(_ station: FuelStation,
+                                      in ctx: NSManagedObjectContext) -> FuelStationCD {
         let req        = FuelStationCD.fetchRequest()
         req.predicate  = NSPredicate(format: "placeID == %@", station.id)
         req.fetchLimit = 1
-
         let cd: FuelStationCD = (try? ctx.fetch(req).first) ?? FuelStationCD(context: ctx)
         cd.placeID   = station.id
         cd.name      = station.name

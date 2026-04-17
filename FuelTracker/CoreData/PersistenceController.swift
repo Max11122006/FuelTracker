@@ -62,7 +62,7 @@ class PersistenceController {
         price.pricePerLitre = 148.9
         price.fuelType = "unleaded"
         price.recordedAt = Date()
-        price.source = "essoFeed"
+        price.source = "fuelFinderAPI"
         price.station = station
 
         let station2 = FuelStationCD(context: ctx)

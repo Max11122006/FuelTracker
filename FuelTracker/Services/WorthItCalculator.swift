@@ -51,6 +51,7 @@ enum WorthItCalculator {
         return WorthItResult(
             id:                       station.id,
             station:                  station,
+            fillLitres:               fillLitres,
             essoEffectivePricePence:  essoEffective,
             altPricePence:            altPricePence,
             distanceToEssoMiles:      distanceToEssoMiles,

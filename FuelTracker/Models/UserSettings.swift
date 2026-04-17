@@ -2,14 +2,14 @@ import Foundation
 
 struct UserSettings {
     var carMPG: Double
-    var fillUpLitres: Double
+    var fillUpLitres: Double        // litres needed to fill the tank (derived from gauge level)
     var essoDiscountPence: Double
     var homePostcode: String
     var uniLocation: String
 
     init(
         carMPG: Double            = Config.defaultMPG,
-        fillUpLitres: Double      = Config.defaultFillLitres,
+        fillUpLitres: Double      = Config.hondaCivicTankLitres * (1.0 - Config.defaultFuelGaugeLevel),
         essoDiscountPence: Double = Config.defaultEssoDiscount,
         homePostcode: String      = Config.defaultHomePostcode,
         uniLocation: String       = Config.defaultUniLocation

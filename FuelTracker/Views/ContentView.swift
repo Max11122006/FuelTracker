@@ -11,13 +11,17 @@ struct ContentView: View {
                 .tabItem { Label("Map", systemImage: "map.fill") }
                 .tag(0)
 
+            BestPickView()
+                .tabItem { Label("Best Pick", systemImage: "star.fill") }
+                .tag(1)
+
             StationsListView()
                 .tabItem { Label("Stations", systemImage: "fuelpump.fill") }
-                .tag(1)
+                .tag(2)
 
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape.fill") }
-                .tag(2)
+                .tag(3)
         }
         .tint(.green)
     }

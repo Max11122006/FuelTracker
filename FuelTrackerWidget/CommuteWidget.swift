@@ -55,7 +55,7 @@ struct CommuteWidget: Widget {
             CommuteWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Commute Fuel Check")
-        .description("Shows whether it's worth stopping for fuel on your commute to Heriot-Watt.")
+        .description("Shows whether it's worth stopping for fuel on your commute route.")
         .supportedFamilies([.systemSmall, .systemMedium])
     }
 }

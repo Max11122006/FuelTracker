@@ -20,21 +20,20 @@ struct SettingsView: View {
                                 .foregroundColor(.secondary)
                         }
                     }
-
-                    LabeledContent("Typical fill-up") {
-                        HStack {
-                            TextField("40", value: $settingsVM.fillUpLitres, format: .number)
-                                .keyboardType(.decimalPad)
-                                .multilineTextAlignment(.trailing)
-                                .frame(width: 60)
-                            Text("litres")
-                                .foregroundColor(.secondary)
-                        }
-                    }
                 } header: {
                     Text("Car")
                 } footer: {
                     Text("Used to calculate the extra fuel cost of driving to a farther station.")
+                }
+
+                // ── Fuel Level ─────────────────────────────────────────────────
+                Section {
+                    FuelGaugeView(level: $settingsVM.fuelGaugeLevel)
+                        .padding(.vertical, 4)
+                } header: {
+                    Text("Current Fuel Level")
+                } footer: {
+                    Text("2006 Honda Civic (50 L tank). Drag the gauge to your current level — the fill-up amount is calculated automatically.")
                 }
 
                 // ── Fuel Card ──────────────────────────────────────────────────
@@ -58,14 +57,14 @@ struct SettingsView: View {
                 // ── Commute ────────────────────────────────────────────────────
                 Section {
                     LabeledContent("Home postcode") {
-                        TextField("EH17 8LW", text: $settingsVM.homePostcode)
+                        TextField("e.g. EH17 8LW", text: $settingsVM.homePostcode)
                             .multilineTextAlignment(.trailing)
                             .autocorrectionDisabled()
                             .textInputAutocapitalization(.characters)
                     }
 
                     LabeledContent("Destination") {
-                        TextField("Heriot-Watt University Edinburgh",
+                        TextField("e.g. Heriot-Watt University",
                                   text: $settingsVM.uniLocation)
                             .multilineTextAlignment(.trailing)
                     }
@@ -73,6 +72,35 @@ struct SettingsView: View {
                     Text("Commute Route (Widget)")
                 } footer: {
                     Text("The home screen widget monitors stations along this route and shows a green/red verdict.")
+                }
+
+                // ── Fuel Finder API ────────────────────────────────────────────
+                Section {
+                    SecureField("Client ID", text: $settingsVM.fuelFinderClientID)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
+
+                    SecureField("Client Secret", text: $settingsVM.fuelFinderClientSecret)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
+
+                    if settingsVM.credentialsConfigured {
+                        Label("Credentials stored in Keychain", systemImage: "checkmark.shield.fill")
+                            .foregroundColor(Color("PinGreen"))
+                            .font(.footnote)
+                    }
+
+                    if settingsVM.credentialsConfigured {
+                        Button(role: .destructive) {
+                            settingsVM.clearCredentials()
+                        } label: {
+                            Label("Clear Saved Credentials", systemImage: "trash")
+                        }
+                    }
+                } header: {
+                    Text("Fuel Finder API")
+                } footer: {
+                    Text("Register at developer.fuel-finder.service.gov.uk. Credentials are stored in the iOS Keychain, never in iCloud or source code.")
                 }
 
                 // ── Save ───────────────────────────────────────────────────────
@@ -105,12 +133,8 @@ struct SettingsView: View {
 
                 // ── About ──────────────────────────────────────────────────────
                 Section {
-                    LabeledContent("Esso price source") {
-                        Text("CMA Live Feed")
-                            .foregroundColor(.secondary)
-                    }
-                    LabeledContent("Station data") {
-                        Text("Google Places API")
+                    LabeledContent("Price & station data") {
+                        Text("UK Gov Fuel Finder API")
                             .foregroundColor(.secondary)
                     }
                     LabeledContent("Version") {

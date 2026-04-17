@@ -36,10 +36,6 @@
 		<string>com.maxd.FuelTracker.priceRefresh</string>
 	</array>
 
-	<!-- Google Places API key (value injected from Secrets.xcconfig at build time) -->
-	<key>GOOGLE_PLACES_API_KEY</key>
-	<string>$(GOOGLE_PLACES_API_KEY)</string>
-
 	<!-- UI -->
 	<key>UILaunchScreen</key>
 	<dict/>

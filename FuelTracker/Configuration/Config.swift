@@ -5,44 +5,35 @@ enum Config {
 
     // MARK: - App Group
 
-    static let appGroupIdentifier        = "group.com.maxd.FuelTracker"
-    static let backgroundRefreshTaskID   = "com.maxd.FuelTracker.priceRefresh"
+    static let appGroupIdentifier      = "group.com.maxd.FuelTracker"
+    static let backgroundRefreshTaskID = "com.maxd.FuelTracker.priceRefresh"
 
-    // MARK: - Google Places API
-    // Key is injected at build time from Secrets.xcconfig via the GOOGLE_PLACES_API_KEY
-    // build setting, which is then written into Info.plist as $(GOOGLE_PLACES_API_KEY).
+    // MARK: - UK Government Fuel Finder API
+    // Credentials are stored in Keychain (via KeychainService), never in source code.
+    // Enter them in Settings → Fuel Finder API after first launch.
+    //
+    // Developer portal: https://developer.fuel-finder.service.gov.uk
+    // GOV.UK guidance:  https://www.gov.uk/guidance/access-the-latest-fuel-prices-and-forecourt-data-via-api-or-email
 
-    static let googlePlacesAPIKey: String = {
-        let key = Bundle.main.infoDictionary?["GOOGLE_PLACES_API_KEY"] as? String ?? ""
-        if key.isEmpty || key.hasPrefix("YOUR_") {
-            print("⚠️ FuelTracker: GOOGLE_PLACES_API_KEY not configured. " +
-                  "Copy Secrets.xcconfig.template → Secrets.xcconfig and add your key.")
-        }
-        return key
-    }()
+    static let fuelFinderBaseURL      = "https://www.fuel-finder.service.gov.uk"
+    static let fuelFinderTokenPath    = "/api/v1/oauth/generate_access_token"
+    static let fuelFinderStationsPath = "/api/v1/pfs"
+    static let fuelFinderPricesPath   = "/api/v1/pfs/fuel-prices"
 
-    static var isPlacesAPIConfigured: Bool {
-        !googlePlacesAPIKey.isEmpty && !googlePlacesAPIKey.hasPrefix("YOUR_")
-    }
+    // MARK: - Commute route defaults (empty → user prompted to fill in Settings)
 
-    // MARK: - API Endpoints
-
-    static let placesNearbyBaseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
-    static let placesDetailBaseURL = "https://maps.googleapis.com/maps/api/place/details/json"
-
-    /// CMA-mandated Esso live price feed — free, no API key required.
-    static let essoFeedURL = URL(string: "https://fuelprices.esso.co.uk/fuel_prices_data.json")!
-
-    // MARK: - Commute route defaults
-
-    static let defaultHomePostcode = "EH17 8LW"
-    static let defaultUniLocation  = "Heriot-Watt University Edinburgh"
+    static let defaultHomePostcode = ""
+    static let defaultUniLocation  = ""
 
     // MARK: - User setting defaults
 
     static let defaultMPG: Double          = 35.0
-    static let defaultFillLitres: Double   = 40.0
     static let defaultEssoDiscount: Double = 10.0  // pence per litre
+
+    // MARK: - Fuel gauge (2006 Honda Civic petrol — 50 L tank)
+
+    static let hondaCivicTankLitres: Double   = 50.0
+    static let defaultFuelGaugeLevel: Double  = 0.5   // half tank on first launch
 
     // MARK: - Staleness thresholds (hours)
 
@@ -51,7 +42,7 @@ enum Config {
 
     // MARK: - Map
 
-    static let defaultSearchRadiusMetres: Double = 5000
+    static let defaultSearchRadiusMiles: Double = 10.0
 
     // MARK: - Pin colour thresholds (pence per litre above cheapest)
 

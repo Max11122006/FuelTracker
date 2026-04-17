@@ -2,7 +2,7 @@ import Foundation
 import CoreLocation
 
 struct FuelStation: Identifiable, Equatable {
-    let id: String                  // Google Place ID (stable)
+    let id: String                  // Fuel Finder forecourt_id (stable)
     let name: String
     let brand: String?
     let coordinate: CLLocationCoordinate2D
@@ -33,9 +33,9 @@ struct FuelStation: Identifiable, Equatable {
     // MARK: - Price source
 
     enum PriceSource: String {
-        case essoFeed    = "essoFeed"
-        case manual      = "manual"
-        case unknown     = "unknown"
+        case fuelFinderAPI = "fuelFinderAPI"
+        case manual        = "manual"
+        case unknown       = "unknown"
     }
 
     // MARK: - Equatable (by Place ID)

@@ -6,6 +6,9 @@ struct WorthItResult: Identifiable, Equatable {
 
     let station: FuelStation
 
+    // Volume (stored so views can show fill-up cost without needing settings)
+    let fillLitres: Double
+
     // Prices in pence per litre
     let essoEffectivePricePence: Double     // sticker − discount
     let altPricePence: Double               // raw price at this station
@@ -28,6 +31,11 @@ struct WorthItResult: Identifiable, Equatable {
 
     let isWorthIt: Bool
 
+    // MARK: - Fill-up costs
+
+    var fillUpCostPounds: Double     { altPricePence           * fillLitres / 100.0 }
+    var essoFillUpCostPounds: Double { essoEffectivePricePence * fillLitres / 100.0 }
+
     // MARK: - Formatted strings
 
     var formattedStickerPrice: String {
@@ -38,16 +46,38 @@ struct WorthItResult: Identifiable, Equatable {
         String(format: "%.1fp", effectivePricePerLitre)
     }
 
+    var formattedFillUpCost: String {
+        String(format: "£%.2f", fillUpCostPounds)
+    }
+
+    var formattedEssoFillUpCost: String {
+        String(format: "£%.2f", essoFillUpCostPounds)
+    }
+
+    var formattedFillVolume: String {
+        String(format: "%.0f L", fillLitres)
+    }
+
     var formattedDistance: String {
         distanceToAltMiles < 0.1
             ? "< 0.1 mi"
             : String(format: "%.1f mi", distanceToAltMiles)
     }
 
+    var formattedExtraDistance: String {
+        extraDistanceMiles < 0.1
+            ? "no detour"
+            : String(format: "%.1f mi further", extraDistanceMiles)
+    }
+
     var formattedExtraFuelCost: String {
         extraFuelCostPence < 0.5
-            ? "no detour"
-            : String(format: "+%.0fp fuel", extraFuelCostPence)
+            ? "no detour cost"
+            : String(format: "£%.2f detour fuel", extraFuelCostPence / 100.0)
+    }
+
+    var formattedGrossSaving: String {
+        String(format: "£%.2f", abs(grossSavingsPence) / 100.0)
     }
 
     var formattedNetSaving: String {

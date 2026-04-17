@@ -6,6 +6,7 @@ struct StationsListView: View {
 
     @State private var showManualEntry   = false
     @State private var selectedStation: FuelStation?
+    @State private var expandedID: String?
 
     var body: some View {
         NavigationView {
@@ -47,8 +48,9 @@ struct StationsListView: View {
             if let esso = stationsVM.essoStation {
                 Section {
                     EssoReferenceCard(
-                        station: esso,
-                        discountPence: settingsVM.essoDiscountPence
+                        station:        esso,
+                        discountPence:  settingsVM.essoDiscountPence,
+                        fillLitres:     settingsVM.fillUpLitres
                     )
                     .listRowBackground(Color("CardBackground"))
                     .listRowInsets(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
@@ -64,8 +66,14 @@ struct StationsListView: View {
                         StationRowView(
                             result:         result,
                             rank:           idx + 1,
-                            cheapestPrice:  stationsVM.cheapestEffectivePrice
+                            cheapestPrice:  stationsVM.cheapestEffectivePrice,
+                            isExpanded:     expandedID == result.id
                         )
+                        .onTapGesture {
+                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                                expandedID = expandedID == result.id ? nil : result.id
+                            }
+                        }
                         .listRowBackground(Color("CardBackground"))
                         .swipeActions(edge: .trailing) {
                             Button {
@@ -80,7 +88,7 @@ struct StationsListView: View {
                     HStack {
                         Text("Alternatives")
                         Spacer()
-                        Text("Sorted by effective cost")
+                        Text("Tap a row for breakdown")
                             .font(.caption2)
                             .foregroundColor(.secondary)
                     }
@@ -127,7 +135,7 @@ struct StationsListView: View {
             Text("No stations found")
                 .font(.title3).fontWeight(.semibold)
 
-            Text("Pull down to refresh, or check that Location Services are enabled and your Google Places API key is configured.")
+            Text("Pull down to refresh, or check that Location Services are enabled and your Fuel Finder API credentials are configured in Settings.")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -155,9 +163,11 @@ struct StationsListView: View {
 private struct EssoReferenceCard: View {
     let station: FuelStation
     let discountPence: Double
+    let fillLitres: Double
 
-    private var stickerPrice: Double  { station.pricePerLitre ?? 0 }
+    private var stickerPrice: Double   { station.pricePerLitre ?? 0 }
     private var effectivePrice: Double { stickerPrice - discountPence }
+    private var fillUpCost: Double     { effectivePrice * fillLitres / 100.0 }
 
     var body: some View {
         HStack(spacing: 12) {
@@ -166,7 +176,7 @@ private struct EssoReferenceCard: View {
                 .fill(Color.blue)
                 .frame(width: 4)
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 HStack {
                     Label(station.name, systemImage: "creditcard.fill")
                         .font(.subheadline).fontWeight(.semibold)
@@ -181,7 +191,7 @@ private struct EssoReferenceCard: View {
                         .clipShape(Capsule())
                 }
 
-                HStack(spacing: 20) {
+                HStack(spacing: 0) {
                     VStack(alignment: .leading, spacing: 1) {
                         Text(String(format: "%.1fp", stickerPrice))
                             .font(.system(size: 14))
@@ -190,26 +200,24 @@ private struct EssoReferenceCard: View {
                         Text("Pump")
                             .font(.caption2).foregroundColor(.secondary)
                     }
+
+                    Spacer()
+
                     VStack(alignment: .leading, spacing: 1) {
                         Text(String(format: "%.1fp", effectivePrice))
                             .font(.system(size: 16, weight: .bold))
                         Text("With card")
                             .font(.caption2).foregroundColor(.secondary)
                     }
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text(String(format: "−%.0fp", discountPence))
-                            .font(.system(size: 14, weight: .medium))
-                            .foregroundColor(.blue)
-                        Text("Saving")
-                            .font(.caption2).foregroundColor(.secondary)
-                    }
+
                     Spacer()
-                    if let addr = station.address {
-                        Text(addr)
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.trailing)
-                            .lineLimit(2)
+
+                    VStack(alignment: .trailing, spacing: 1) {
+                        Text(String(format: "£%.2f", fillUpCost))
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.blue)
+                        Text("to fill (\(String(format: "%.0f", fillLitres)) L)")
+                            .font(.caption2).foregroundColor(.secondary)
                     }
                 }
 

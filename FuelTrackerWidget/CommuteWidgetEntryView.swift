@@ -20,10 +20,13 @@ struct CommuteWidgetEntryView: View {
     // MARK: - Body
 
     var body: some View {
-        switch family {
-        case .systemSmall: smallView
-        default:           mediumView
+        Group {
+            switch family {
+            case .systemSmall: smallView
+            default:           mediumView
+            }
         }
+        .widgetBackground(Color(UIColor.secondarySystemBackground))
     }
 
     // MARK: - Small widget (verdict + saving)
@@ -67,7 +70,6 @@ struct CommuteWidgetEntryView: View {
             }
             .padding(12)
         }
-        .background(Color(UIColor.secondarySystemBackground))
     }
 
     // MARK: - Medium widget (full comparison)
@@ -131,7 +133,6 @@ struct CommuteWidgetEntryView: View {
                 .padding(.trailing, 12)
             }
         }
-        .background(Color(UIColor.secondarySystemBackground))
     }
 
     private func stationRow(symbol: String, color: Color, name: String, price: String, note: String) -> some View {
@@ -165,6 +166,19 @@ struct CommuteWidgetEntryView: View {
                     .font(.system(size: 9))
                     .foregroundColor(.secondary)
             }
+        }
+    }
+}
+
+// MARK: - Widget background helper (containerBackground required on iOS 17+)
+
+extension View {
+    @ViewBuilder
+    func widgetBackground(_ color: Color) -> some View {
+        if #available(iOS 17.0, *) {
+            containerBackground(for: .widget) { color }
+        } else {
+            background(color)
         }
     }
 }

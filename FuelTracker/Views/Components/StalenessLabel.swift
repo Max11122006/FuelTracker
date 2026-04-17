@@ -38,9 +38,9 @@ struct StalenessLabel: View {
 
 #Preview {
     VStack(alignment: .leading, spacing: 8) {
-        StalenessLabel(lastUpdated: Date(),                                     source: .essoFeed)
-        StalenessLabel(lastUpdated: Date(timeIntervalSinceNow: -3600 * 2),     source: .essoFeed)
-        StalenessLabel(lastUpdated: Date(timeIntervalSinceNow: -3600 * 6),     source: .essoFeed)
+        StalenessLabel(lastUpdated: Date(),                                     source: .fuelFinderAPI)
+        StalenessLabel(lastUpdated: Date(timeIntervalSinceNow: -3600 * 2),     source: .fuelFinderAPI)
+        StalenessLabel(lastUpdated: Date(timeIntervalSinceNow: -3600 * 6),     source: .fuelFinderAPI)
         StalenessLabel(lastUpdated: Date(timeIntervalSinceNow: -3600),         source: .manual)
         StalenessLabel(lastUpdated: nil,                                        source: .unknown)
     }

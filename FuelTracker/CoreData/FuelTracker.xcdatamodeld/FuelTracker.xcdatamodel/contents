@@ -43,7 +43,7 @@
   <!-- UserSettingsCD — singleton row storing the user's preferences -->
   <entity name="UserSettingsCD" representedClassName="UserSettingsCD" syncable="YES">
     <attribute name="carMPG"            optional="NO" attributeType="Double" defaultValueString="35"  usesScalarValueType="YES"/>
-    <attribute name="fillUpLitres"      optional="NO" attributeType="Double" defaultValueString="40"  usesScalarValueType="YES"/>
+    <attribute name="fuelGaugeLevel"    optional="NO" attributeType="Double" defaultValueString="0.5" usesScalarValueType="YES"/>
     <attribute name="essoDiscountPence" optional="NO" attributeType="Double" defaultValueString="10"  usesScalarValueType="YES"/>
     <attribute name="homePostcode"      optional="YES" attributeType="String"/>
     <attribute name="uniLocation"       optional="YES" attributeType="String"/>

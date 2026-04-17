@@ -46,25 +46,3 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.maxd.FuelTracker
         INFOPLIST_FILE: FuelTracker/Info.plist
         CODE_SIGN_ENTITLEMENTS: FuelTracker/FuelTracker.entitlements
-        GOOGLE_PLACES_API_KEY: $(GOOGLE_PLACES_API_KEY)
-
-    dependencies:
-      - target: FuelTrackerWidget
-        embed: true
-
-  # ── Widget Extension ───────────────────────────────────────────────────────────
-  FuelTrackerWidget:
-    type: app-extension
-    platform: iOS
-    deploymentTarget: "16.0"
-
-    sources:
-      - path: FuelTrackerWidget
-      - path: Shared
-
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.maxd.FuelTracker.widget
-        INFOPLIST_FILE: FuelTrackerWidget/Info.plist
-        CODE_SIGN_ENTITLEMENTS: FuelTrackerWidget/FuelTrackerWidget.entitlements
-        APPLICATION_EXTENSION_API_ONLY: YES

@@ -9,22 +9,17 @@
 /* Begin PBXBuildFile section */
 		040D5B93A7E78EE5E9CE072E /* UserSettingsCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88A6345F5E155A02DA036BA /* UserSettingsCD.swift */; };
 		06BDD1DBD373741568D04506 /* StationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B49FD5C812A2DBD8408A2EC /* StationAnnotation.swift */; };
-		07A4A7722814A444C642AF02 /* FuelTrackerWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EFF1CDD13D60335558C29AFD /* FuelTrackerWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		090BDEE9B5E9F409006FAE9B /* WorthItCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0537A316AF97605DF08D5D5B /* WorthItCalculator.swift */; };
 		09113E30CAAB913BB579C1D4 /* StationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1566D222497B6C97D9E0E682 /* StationRowView.swift */; };
 		0A50572B93B1E65A920DC403 /* WorthItResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4283888E8045D3887282C2C5 /* WorthItResult.swift */; };
-		0E5914A080D447FAE7887899 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4A2B101B068EF81ED1FD57A /* Assets.xcassets */; };
-		0FADF4AF117FED636F977E3D /* CommuteWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDAF7BF63038CE33CA14C6B /* CommuteWidgetEntryView.swift */; };
 		12A39C513B1B5BD591358995 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80F29C767B4F49F4036F338 /* Config.swift */; };
-		25FE1CFF3CF04D940D3382AA /* WidgetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190B73725C4F945F116AB949 /* WidgetModels.swift */; };
-		2FB0038DE67AEF22644EBB45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7898E3F37EC3036C8FD68E92 /* Assets.xcassets */; };
-		3AC8FB60FCDD9DD3FE748046 /* CommuteWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4FC4ED95C4962BA87B93CF /* CommuteWidget.swift */; };
 		3C36399F7DDEF5D9B98127D3 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932229B80A3F34D8BEB09FB3 /* UserSettings.swift */; };
 		3E0ED7626B1CBAE556D519A5 /* FuelPriceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB00BC2D646B91FF44FF0DD0 /* FuelPriceService.swift */; };
 		405326CD1705BA6DF34BA68A /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72434F55C54C0F342A2B7372 /* LocationService.swift */; };
 		43E17B4FBA0C636698E5012E /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DA1BC9003D2498404D7757 /* PersistenceController.swift */; };
 		442912B3E7E597768728CE06 /* FuelStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2195A4D02A2E77CFBD00D7 /* FuelStation.swift */; };
 		4A4E5C122513E0DD09FFF547 /* StalenessLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95C8D41B083E00AE2DB8C43 /* StalenessLabel.swift */; };
+		5AC1C87B15F8824C96A80025 /* FuelGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45D22E264E8D8B8200C462 /* FuelGaugeView.swift */; };
 		5C1CE6651C412F3085FE55EE /* PricePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A8DF0A7665187F0D15C12F /* PricePin.swift */; };
 		602EF2BE27ADCD22C7E06D2C /* VerdictBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0472D72A526D76A98E0859A /* VerdictBadge.swift */; };
 		603BE34FA21F33D029B7D879 /* StationsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068CC9F0CEC85628453F8E24 /* StationsListView.swift */; };
@@ -35,40 +30,18 @@
 		826A9A4E6CDDCE74C659A472 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD20B691229B50DAC7A83AD3 /* SettingsViewModel.swift */; };
 		8393EDB45159ADC4D087D783 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DB1F0E98499796E73D5B09 /* SettingsView.swift */; };
 		840E66165EBE33CD2A39A219 /* Secrets.xcconfig.template in Resources */ = {isa = PBXBuildFile; fileRef = 2BBC176644BF9273356D755F /* Secrets.xcconfig.template */; };
-		9AB7F4CD4D89604A2FEF49A9 /* AppGroupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F08CA1C810AFB8C7F2051DB /* AppGroupStore.swift */; };
 		B56FB60BCAC0EEAB5FB30937 /* FuelPriceRecordCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9928143BF52D41D17A41DBD1 /* FuelPriceRecordCD.swift */; };
+		B61683AFEFE9D86098939EA4 /* BestPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D75D8FF98AD2A33593E85F /* BestPickView.swift */; };
+		B631D0F42F2930E57B418821 /* FuelFinderAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A1255240668333BA9161486 /* FuelFinderAPIService.swift */; };
 		C0013A0672E312C7CB73C15A /* FuelTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC5105C24390E3EECFC28208 /* FuelTracker.xcdatamodeld */; };
+		CA6C41554B8C798413C43008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE11DF0A42B73202C808C62B /* Assets.xcassets */; };
 		CACD4C59E101489855A50DD7 /* GooglePlacesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808154876AA24E3CF4725325 /* GooglePlacesService.swift */; };
-		CBD33B6B4B6A282687334790 /* FuelTrackerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3170E7505C55BE9C9AEF0E2A /* FuelTrackerWidget.swift */; };
 		D2BE25BCEC6A335D3C4BD2D9 /* AppGroupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F08CA1C810AFB8C7F2051DB /* AppGroupStore.swift */; };
 		D930690406489067C69A8491 /* FuelStationCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEBFA25B7C3F82B04E7F78E /* FuelStationCD.swift */; };
 		F58B9E97A1189287B1DBC858 /* StationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C732A41F73136F8437F186A1 /* StationMapView.swift */; };
 		F6D42F594E44FD45733834A7 /* FuelTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D12916A611BC90B6144627C /* FuelTrackerApp.swift */; };
+		FA6219AA0685F61077202CCE /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A51C96034B2EA713EC370B /* KeychainService.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		9008B610CE2279816E446E66 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3D8D3AD98CA0FD58A11256CB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C59EFE0653F0309575E71F19;
-			remoteInfo = FuelTrackerWidget;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		FE8756166EF4F6088B51D84B /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				07A4A7722814A444C642AF02 /* FuelTrackerWidget.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		000B566F2228486C05642F39 /* EssoFeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssoFeedService.swift; sourceTree = "<group>"; };
@@ -76,31 +49,27 @@
 		0537A316AF97605DF08D5D5B /* WorthItCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorthItCalculator.swift; sourceTree = "<group>"; };
 		068CC9F0CEC85628453F8E24 /* StationsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsListView.swift; sourceTree = "<group>"; };
 		0F08CA1C810AFB8C7F2051DB /* AppGroupStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupStore.swift; sourceTree = "<group>"; };
-		0FFED3DF605A34FA4C4C198F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1566D222497B6C97D9E0E682 /* StationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationRowView.swift; sourceTree = "<group>"; };
-		190B73725C4F945F116AB949 /* WidgetModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetModels.swift; sourceTree = "<group>"; };
 		2BBC176644BF9273356D755F /* Secrets.xcconfig.template */ = {isa = PBXFileReference; lastKnownFileType = text; path = Secrets.xcconfig.template; sourceTree = "<group>"; };
-		3170E7505C55BE9C9AEF0E2A /* FuelTrackerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelTrackerWidget.swift; sourceTree = "<group>"; };
 		3B93EEA6C72B68DDCE72488B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3D2195A4D02A2E77CFBD00D7 /* FuelStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelStation.swift; sourceTree = "<group>"; };
 		4283888E8045D3887282C2C5 /* WorthItResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorthItResult.swift; sourceTree = "<group>"; };
 		4A86CEDB3B3AB27F880FF146 /* FuelTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FuelTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54EF7EAC4C1AC7563E909E5C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5B49FD5C812A2DBD8408A2EC /* StationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationAnnotation.swift; sourceTree = "<group>"; };
-		5BDAF7BF63038CE33CA14C6B /* CommuteWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommuteWidgetEntryView.swift; sourceTree = "<group>"; };
-		5D4FC4ED95C4962BA87B93CF /* CommuteWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommuteWidget.swift; sourceTree = "<group>"; };
 		6C416277192B5BA148CBF3F7 /* FuelTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FuelTracker.entitlements; sourceTree = "<group>"; };
 		6D12916A611BC90B6144627C /* FuelTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelTrackerApp.swift; sourceTree = "<group>"; };
 		72434F55C54C0F342A2B7372 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
-		7898E3F37EC3036C8FD68E92 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78A8DF0A7665187F0D15C12F /* PricePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricePin.swift; sourceTree = "<group>"; };
+		7A1255240668333BA9161486 /* FuelFinderAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelFinderAPIService.swift; sourceTree = "<group>"; };
 		808154876AA24E3CF4725325 /* GooglePlacesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesService.swift; sourceTree = "<group>"; };
-		844E752DBFA891FF08325A81 /* FuelTrackerWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FuelTrackerWidget.entitlements; sourceTree = "<group>"; };
 		932229B80A3F34D8BEB09FB3 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		9928143BF52D41D17A41DBD1 /* FuelPriceRecordCD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelPriceRecordCD.swift; sourceTree = "<group>"; };
+		A1A51C96034B2EA713EC370B /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		AAEBFA25B7C3F82B04E7F78E /* FuelStationCD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelStationCD.swift; sourceTree = "<group>"; };
+		AD45D22E264E8D8B8200C462 /* FuelGaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelGaugeView.swift; sourceTree = "<group>"; };
+		AE11DF0A42B73202C808C62B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0472D72A526D76A98E0859A /* VerdictBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerdictBadge.swift; sourceTree = "<group>"; };
-		B4A2B101B068EF81ED1FD57A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF58F69B91EEA8CECC9C3220 /* ManualPriceEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualPriceEntryView.swift; sourceTree = "<group>"; };
 		C0DE3461849E659CF68F50C0 /* StationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsViewModel.swift; sourceTree = "<group>"; };
 		C732A41F73136F8437F186A1 /* StationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationMapView.swift; sourceTree = "<group>"; };
@@ -110,7 +79,7 @@
 		DB00BC2D646B91FF44FF0DD0 /* FuelPriceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelPriceService.swift; sourceTree = "<group>"; };
 		E88A6345F5E155A02DA036BA /* UserSettingsCD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsCD.swift; sourceTree = "<group>"; };
 		E95C8D41B083E00AE2DB8C43 /* StalenessLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StalenessLabel.swift; sourceTree = "<group>"; };
-		EFF1CDD13D60335558C29AFD /* FuelTrackerWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FuelTrackerWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0D75D8FF98AD2A33593E85F /* BestPickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestPickView.swift; sourceTree = "<group>"; };
 		F5DB1F0E98499796E73D5B09 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FED877AFF9B1AD4BCF34ECE9 /* FuelTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FuelTracker.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				22E121076CF36FEB1D0CD8D5 /* FuelTracker */,
-				23EA1B10365DE050D3B315F8 /* FuelTrackerWidget */,
 				35865040F8ABDF12E870B03E /* Shared */,
 				C3BEA5FF893F1559366939E1 /* Products */,
 			);
@@ -129,6 +97,7 @@
 		1F6DF826A96FCA46CA2D6874 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				27D8C851F8872F3142679137 /* BestPick */,
 				DBD011CB17776F0A42276E2B /* Components */,
 				96B728B8E1EAF92038BB7EEB /* List */,
 				77785B7AFDC38A08E62A4B58 /* Map */,
@@ -145,7 +114,6 @@
 				816083DBD170C26605300D1E /* Configuration */,
 				AE749961C291F21A7D399B9D /* CoreData */,
 				E5FA2C671F8A643C95F9E131 /* Models */,
-				5499A8B400E6E41D18D24127 /* Resources */,
 				C8F7311A38855251ED9E6D20 /* Services */,
 				FB97B246B11F1E0DA314B75E /* ViewModels */,
 				1F6DF826A96FCA46CA2D6874 /* Views */,
@@ -155,24 +123,19 @@
 			path = FuelTracker;
 			sourceTree = "<group>";
 		};
-		23EA1B10365DE050D3B315F8 /* FuelTrackerWidget */ = {
+		27D8C851F8872F3142679137 /* BestPick */ = {
 			isa = PBXGroup;
 			children = (
-				B4A2B101B068EF81ED1FD57A /* Assets.xcassets */,
-				5D4FC4ED95C4962BA87B93CF /* CommuteWidget.swift */,
-				5BDAF7BF63038CE33CA14C6B /* CommuteWidgetEntryView.swift */,
-				844E752DBFA891FF08325A81 /* FuelTrackerWidget.entitlements */,
-				3170E7505C55BE9C9AEF0E2A /* FuelTrackerWidget.swift */,
-				0FFED3DF605A34FA4C4C198F /* Info.plist */,
-				190B73725C4F945F116AB949 /* WidgetModels.swift */,
+				F0D75D8FF98AD2A33593E85F /* BestPickView.swift */,
 			);
-			path = FuelTrackerWidget;
+			path = BestPick;
 			sourceTree = "<group>";
 		};
 		35865040F8ABDF12E870B03E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
 				0F08CA1C810AFB8C7F2051DB /* AppGroupStore.swift */,
+				AE11DF0A42B73202C808C62B /* Assets.xcassets */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -183,14 +146,6 @@
 				6D12916A611BC90B6144627C /* FuelTrackerApp.swift */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		5499A8B400E6E41D18D24127 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				7898E3F37EC3036C8FD68E92 /* Assets.xcassets */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		715004BE47E934CAA4748983 /* Settings */ = {
@@ -246,7 +201,6 @@
 			isa = PBXGroup;
 			children = (
 				4A86CEDB3B3AB27F880FF146 /* FuelTracker.app */,
-				EFF1CDD13D60335558C29AFD /* FuelTrackerWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -255,8 +209,10 @@
 			isa = PBXGroup;
 			children = (
 				000B566F2228486C05642F39 /* EssoFeedService.swift */,
+				7A1255240668333BA9161486 /* FuelFinderAPIService.swift */,
 				DB00BC2D646B91FF44FF0DD0 /* FuelPriceService.swift */,
 				808154876AA24E3CF4725325 /* GooglePlacesService.swift */,
+				A1A51C96034B2EA713EC370B /* KeychainService.swift */,
 				72434F55C54C0F342A2B7372 /* LocationService.swift */,
 				0537A316AF97605DF08D5D5B /* WorthItCalculator.swift */,
 			);
@@ -266,6 +222,7 @@
 		DBD011CB17776F0A42276E2B /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				AD45D22E264E8D8B8200C462 /* FuelGaugeView.swift */,
 				78A8DF0A7665187F0D15C12F /* PricePin.swift */,
 				E95C8D41B083E00AE2DB8C43 /* StalenessLabel.swift */,
 				B0472D72A526D76A98E0859A /* VerdictBadge.swift */,
@@ -295,36 +252,16 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C59EFE0653F0309575E71F19 /* FuelTrackerWidget */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3B839ECC9641D4683A8F48A4 /* Build configuration list for PBXNativeTarget "FuelTrackerWidget" */;
-			buildPhases = (
-				6453532A4D6ABD094AF233B7 /* Sources */,
-				98B3439DFC1385EED3DDD13E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = FuelTrackerWidget;
-			packageProductDependencies = (
-			);
-			productName = FuelTrackerWidget;
-			productReference = EFF1CDD13D60335558C29AFD /* FuelTrackerWidget.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		CF7773F7D4919BCA177573E5 /* FuelTracker */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C6E61D1FE0DA01059F87B9EE /* Build configuration list for PBXNativeTarget "FuelTracker" */;
 			buildPhases = (
 				499684F0301944C69899EF2E /* Sources */,
 				54C225A442DFEE472B1D8D72 /* Resources */,
-				FE8756166EF4F6088B51D84B /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				82152935C09D5614904AD604 /* PBXTargetDependency */,
 			);
 			name = FuelTracker;
 			packageProductDependencies = (
@@ -340,11 +277,8 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2640;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
-					C59EFE0653F0309575E71F19 = {
-						ProvisioningStyle = Automatic;
-					};
 					CF7773F7D4919BCA177573E5 = {
 						ProvisioningStyle = Automatic;
 					};
@@ -365,7 +299,6 @@
 			projectRoot = "";
 			targets = (
 				CF7773F7D4919BCA177573E5 /* FuelTracker */,
-				C59EFE0653F0309575E71F19 /* FuelTrackerWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -375,16 +308,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FB0038DE67AEF22644EBB45 /* Assets.xcassets in Resources */,
+				CA6C41554B8C798413C43008 /* Assets.xcassets in Resources */,
 				840E66165EBE33CD2A39A219 /* Secrets.xcconfig.template in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		98B3439DFC1385EED3DDD13E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0E5914A080D447FAE7887899 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,9 +321,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2BE25BCEC6A335D3C4BD2D9 /* AppGroupStore.swift in Sources */,
+				B61683AFEFE9D86098939EA4 /* BestPickView.swift in Sources */,
 				12A39C513B1B5BD591358995 /* Config.swift in Sources */,
 				7086BA134AAA90DE5538BE6E /* ContentView.swift in Sources */,
 				754F5C48CAD823E4206FB5AD /* EssoFeedService.swift in Sources */,
+				B631D0F42F2930E57B418821 /* FuelFinderAPIService.swift in Sources */,
+				5AC1C87B15F8824C96A80025 /* FuelGaugeView.swift in Sources */,
 				B56FB60BCAC0EEAB5FB30937 /* FuelPriceRecordCD.swift in Sources */,
 				3E0ED7626B1CBAE556D519A5 /* FuelPriceService.swift in Sources */,
 				442912B3E7E597768728CE06 /* FuelStation.swift in Sources */,
@@ -406,6 +334,7 @@
 				C0013A0672E312C7CB73C15A /* FuelTracker.xcdatamodeld in Sources */,
 				F6D42F594E44FD45733834A7 /* FuelTrackerApp.swift in Sources */,
 				CACD4C59E101489855A50DD7 /* GooglePlacesService.swift in Sources */,
+				FA6219AA0685F61077202CCE /* KeychainService.swift in Sources */,
 				405326CD1705BA6DF34BA68A /* LocationService.swift in Sources */,
 				8138C0ABE1C947FCCABCF43F /* ManualPriceEntryView.swift in Sources */,
 				43E17B4FBA0C636698E5012E /* PersistenceController.swift in Sources */,
@@ -426,67 +355,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6453532A4D6ABD094AF233B7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9AB7F4CD4D89604A2FEF49A9 /* AppGroupStore.swift in Sources */,
-				3AC8FB60FCDD9DD3FE748046 /* CommuteWidget.swift in Sources */,
-				0FADF4AF117FED636F977E3D /* CommuteWidgetEntryView.swift in Sources */,
-				CBD33B6B4B6A282687334790 /* FuelTrackerWidget.swift in Sources */,
-				25FE1CFF3CF04D940D3382AA /* WidgetModels.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		82152935C09D5614904AD604 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C59EFE0653F0309575E71F19 /* FuelTrackerWidget */;
-			targetProxy = 9008B610CE2279816E446E66 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		7DECD6FFA042E974AB65D5EA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_ENTITLEMENTS = FuelTrackerWidget/FuelTrackerWidget.entitlements;
-				DEVELOPMENT_TEAM = 77MCBAWDQ8;
-				INFOPLIST_FILE = FuelTrackerWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.maxd.FuelTracker.widget;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		83743C3B05F0E29EC3CFAF65 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_ENTITLEMENTS = FuelTrackerWidget/FuelTrackerWidget.entitlements;
-				DEVELOPMENT_TEAM = 77MCBAWDQ8;
-				INFOPLIST_FILE = FuelTrackerWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.maxd.FuelTracker.widget;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		86A8957365C6E91291E45ECA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -528,7 +399,6 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -550,7 +420,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.9;
@@ -598,7 +467,6 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -613,7 +481,6 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.9;
@@ -628,7 +495,6 @@
 				CODE_SIGN_ENTITLEMENTS = FuelTracker/FuelTracker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 77MCBAWDQ8;
-				GOOGLE_PLACES_API_KEY = "$(GOOGLE_PLACES_API_KEY)";
 				INFOPLIST_FILE = FuelTracker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -649,7 +515,6 @@
 				CODE_SIGN_ENTITLEMENTS = FuelTracker/FuelTracker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 77MCBAWDQ8;
-				GOOGLE_PLACES_API_KEY = "$(GOOGLE_PLACES_API_KEY)";
 				INFOPLIST_FILE = FuelTracker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -670,15 +535,6 @@
 			buildConfigurations = (
 				86A8957365C6E91291E45ECA /* Debug */,
 				941FC272F3B9B35AC72EF81D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		3B839ECC9641D4683A8F48A4 /* Build configuration list for PBXNativeTarget "FuelTrackerWidget" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				83743C3B05F0E29EC3CFAF65 /* Debug */,
-				7DECD6FFA042E974AB65D5EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
